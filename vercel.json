@@ -1,0 +1,5 @@
+{
+  "installCommand": "pnpm install --ignore-scripts --frozen-lockfile",
+  "buildCommand": "pnpm build",
+  "outputDirectory": "dist"
+}
