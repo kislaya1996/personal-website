@@ -11,7 +11,7 @@ import { renderMarkdown } from './lib/markdown'
 const defaultPreviewLimit = 3
 
 function App() {
-  const [sectionId, entrySlug] = useHashRoute()
+  const [sectionId, entrySlug] = usePathRoute()
   const activeSection = siteSections.find((section) => section.id === sectionId)
   const activeEntry = activeSection?.entries?.find((entry) => entry.slug === entrySlug)
 
@@ -40,49 +40,49 @@ function App() {
       {page}
       <footer className="site-footer">
         <span>Built with React and static content.</span>
-        <a href="#/">Home</a>
+        <a href="/">Home</a>
       </footer>
     </main>
   )
 }
 
-function useHashRoute() {
+function usePathRoute() {
   const [segments, setSegments] = useState(getRouteSegments)
 
   useEffect(() => {
     const syncRoute = () => setSegments(getRouteSegments())
 
-    window.addEventListener('hashchange', syncRoute)
-    return () => window.removeEventListener('hashchange', syncRoute)
+    window.addEventListener('popstate', syncRoute)
+    return () => window.removeEventListener('popstate', syncRoute)
   }, [])
 
   return segments
 }
 
 function getRouteSegments() {
-  return window.location.hash
-    .replace(/^#\/?/, '')
+  return window.location.pathname
+    .replace(/^\/+/, '')
     .split('/')
     .filter(Boolean)
 }
 
 function sectionPath(sectionId: string) {
-  return `#/${sectionId}`
+  return `/${sectionId}`
 }
 
 function entryPath(sectionId: string, entrySlug: string) {
-  return `#/${sectionId}/${entrySlug}`
+  return `/${sectionId}/${entrySlug}`
 }
 
 function SiteTopbar() {
   return (
     <header className="site-topbar">
-      <a className="brand-link" href="#/">
+      <a className="brand-link" href="/">
         {profile.name}
       </a>
 
       <nav aria-label="Primary navigation" className="site-nav">
-        <a href="#/">Home</a>
+        <a href="/">Home</a>
         {siteSections.map((section) => (
           <a href={sectionPath(section.id)} key={section.id}>
             {section.navLabel}
@@ -139,7 +139,7 @@ function SectionPreview({ section }: { section: SiteSection }) {
 function SectionPage({ section }: { section: SiteSection }) {
   return (
     <div className="page-view">
-      <a className="breadcrumb" href="#/">
+      <a className="breadcrumb" href="/">
         Home
       </a>
       <ContentSection entries={section.entries} section={section} variant="full" />
@@ -283,7 +283,7 @@ function NotFoundPage({ section }: { section?: SiteSection }) {
           ? `Go back to ${section.navLabel.toLowerCase()} and choose another item.`
           : 'Go back home and choose a section.'}
       </p>
-      <a className="button-link" href={section ? sectionPath(section.id) : '#/'}>
+      <a className="button-link" href={section ? sectionPath(section.id) : '/'}>
         {section ? `Back to ${section.navLabel}` : 'Back home'}
       </a>
     </section>

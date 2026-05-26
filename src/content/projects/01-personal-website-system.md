@@ -5,13 +5,13 @@ subtitle: A minimal, content-driven portfolio that can grow through Markdown fil
 summary: A minimal, content-driven portfolio that can grow through Markdown files and deploy as static assets.
 eyebrow: Website
 status: Active
-tags: React, Vite, GitHub Pages
+tags: React, Vite, Vercel
 links: Source|https://github.com/
 ---
 
 The goal is a personal site that is easy to keep alive. Content should be added in one obvious place, and deployment should be boring enough to trust.
 
-The site uses static Markdown, hash routes, and generated list/detail pages. That keeps it compatible with GitHub Pages while still allowing the content library to grow.
+The site uses static Markdown, clean routes, and generated list/detail pages. Vercel rewrites direct links back to the app while still allowing the content library to grow.
 
 ## What it supports
 
